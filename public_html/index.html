@@ -1,0 +1,31 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="js/libs/jquery-1.9.0/jquery.min.js"></script>
+		<script type="text/javascript" src="js/libs/jqueryui-1.10.0/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/libs/game/jquery.gamequery-0.7.1.js"></script>
+		<script type="text/javascript" src="js/game.js"></script>
+	</head>
+	<body>
+		<div id="playground" style="width: 480px; height: 320px; background: black;">
+			<div id="welcomeScreen" style="width: 480px; height: 320px; position: absolute; background-image: url(images/logo.png); font-family: times, serif;">
+				<div style="position: absolute; top: 150px; width: 480px; color: white;">
+					<div id="loadingBar" style="position: relative; left: 100px; height: 15px; width: 0px; background: red;"></div><br />
+					<center><a style="cursor: pointer;" id="startbutton">Click here to start!</a></center>
+				</div>
+			</div>
+		</div>
+		<div id="sound" >
+			<audio controls loop autoplay>
+				<source src="sound/a.mp3" type="audio/mpeg">
+				Your browser does not support this audio format.
+			</audio>
+		</div>
+	</body>
+</html>
