@@ -61,19 +61,26 @@ function explodePlayer(playerNode) {
 
 // Increase general speed
 function speedUp(number) {
-	var num = number*3;
-	PLANE_SPEED += num;
-	OCTY_SPEED += num;
-	MISSILE_SPEED += num;
-	COIN_SPEED += num;
-	ENERGY_SPEED += num;
-	var n = number * 5;
-	PLANE_POINTS += n;
-	PLANE_DAMAGE += n;
-	OCTY_POINTS += n;
-	OCTY_DAMAGE += n;
-	COIN_POINTS += n;
-	ENERGY += n;
+	//$("#test").html("<h5>" + number + "</h5>");
+	var speed = number * 3;
+	PLANE_SPEED += speed;
+	OCTY_SPEED += speed;
+	MISSILE_SPEED += speed;
+	COIN_SPEED += speed;
+	ENERGY_SPEED += speed;
+	var points = number * 5;
+	PLANE_POINTS += points;
+	PLANE_DAMAGE += points;
+	OCTY_POINTS += points;
+	OCTY_DAMAGE += points;
+	COIN_POINTS += points;
+	ENERGY += points;
+	var spawn = number * 0.1;
+	PLANE_SPAWN += spawn;
+	OCTY_SPAWN += (spawn+spawn);
+	COIN_SPAWN += spawn;
+	ENERGY_SPAWN += spawn;
+	PLANE_FIRE += (spawn*spawn);
 }
 
 // Game objects:
@@ -150,15 +157,15 @@ function Enemy(node) {
 
 function Plane(node) {
 	this.node = $(node);
+	Plane.prototype.speedx = -PLANE_SPEED;
 }
 Plane.prototype = new Enemy();
-Plane.prototype.speedx = -PLANE_SPEED;
 
 function Octy(node) {
 	this.node = $(node);
+	Octy.prototype.speedx = -OCTY_SPEED;
 }
 Octy.prototype = new Enemy();
-Octy.prototype.speedx = -OCTY_SPEED;
 
 function Aid(node) {
 	this.node = $(node);
@@ -172,15 +179,15 @@ function Aid(node) {
 
 function Coin(node) {
 	this.node = $(node);
+	Coin.prototype.speedx = -COIN_SPEED;
 }
 Coin.prototype = new Aid();
-Coin.prototype.speedx = -COIN_SPEED;
 
 function Energy(node) {
 	this.node = $(node);
+	Energy.prototype.speedx = -ENERGY_SPEED;
 }
 Energy.prototype = new Aid();
-Energy.prototype.speedx = -ENERGY_SPEED;
 
 
 // ------------------------------------------
@@ -189,7 +196,6 @@ Energy.prototype.speedx = -ENERGY_SPEED;
 $(function() {
 	// Hide audio player
 	$("#sound").hide();
-	$("#sound2").hide();
 
 	// Sets the id of the loading bar
 	$.loadCallback(function(percent) {
@@ -340,7 +346,7 @@ $(function() {
 		if (!gameOver) {
 			$("#energyHUD").html("Energy: " + $("#player")[0].player.energy);
 			$("#lifeHUD").html("Life: " + $("#player")[0].player.replay);
-			$("#levelHUD").html("Level: " + LEVEL+"		Goal: "+GOAL);
+			$("#levelHUD").html("Level: " + LEVEL + "		Goal: " + GOAL);
 			$("#scoreHUD").html("Score: " + $("#player")[0].player.score);
 			//Update the movement of the ship:
 			if (!playerHit) {
@@ -373,7 +379,9 @@ $(function() {
 					//Does the player did get out of the screen?
 					if ($("#player")[0].player.respawn()) {
 						gameOver = true;
-						$("#playground").append('<div style="position: absolute; top: 80px; left: 200px; color: white; font-family: times, serif;"><center><h1>Game Over</h1><br><a style="cursor: pointer;" id="restartbutton">Click here to restart the game!</a></center></div><div id="sound2" ><audio controls loop autoplay><source src="sound/b.mp3" type="audio/mpeg">Your browser does not support this audio format.</audio></div>');
+						$("#playground").append('<div style="position: absolute; top: 80px; left: 150px; color: white; font-family: times, serif;"><center><h1>Game Over</h1><br><a style="cursor: pointer;" id="restartbutton">Click here to restart the game!</a></center></div><div id="sound2" ><audio controls autoplay><source src="sound/b.mp3" type="audio/mpeg">Your browser does not support this audio format.</audio></div>');
+						$("#sound").remove();
+						$("#sound2").hide();
 						$("#restartbutton").click(restartgame);
 						$("#actors,#playerMissileLayer,#enemiesMissileLayer,#aidLayer").fadeTo(1000, 0);
 						$("#background").fadeTo(5000, 0);
